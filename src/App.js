@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import AppContainer from "./components/AppContainer";
+import { Provider } from "react-redux";
+import "./App.less";
+import { Route, Switch, Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import routes from "./routes";
+import store from "./store";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+var history = createBrowserHistory();
+
+const App = () => (
+  <Provider store={store}>
+    <AppContainer history={history}>
+      <Router history={history}>
+        <Switch>
+          {routes.map((route) => (
+            <Route
+              key={route.path}
+              exact={route.exact}
+              path={route.path}
+              component={route.component}
+            />
+          ))}
+        </Switch>
+      </Router>
+    </AppContainer>
+  </Provider>
+);
 
 export default App;
