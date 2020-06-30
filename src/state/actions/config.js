@@ -1,14 +1,16 @@
 import axios from "axios";
-import { API_URL, LOAD_CONFIGURATION } from "../constants";
+import { LOAD_CONFIGURATION } from "../constants";
 
 export const loadConfig = (data) => ({
   type: LOAD_CONFIGURATION,
   data: data,
 });
 
+const { REACT_APP_BACKEND_URL } = process.env;
+
 export const getConfig = () => (dispatch) =>
   axios
-    .get(`${API_URL}/settings`)
+    .get(`${REACT_APP_BACKEND_URL}/settings`)
     .then((res) => {
       dispatch(loadConfig(res.data.data));
     })
