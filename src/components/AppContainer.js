@@ -57,13 +57,13 @@ const AppContainer = ({
               key="signup"
               onClick={() => history.push("/signup")}
               title="Signup">
-              Signup
+              Sign Up
             </Item>
             <Item
               key="signin"
               onClick={() => history.push("/login")}
               title="Signup">
-              SignIn
+              Sign In
             </Item>
           </Menu>
         )}

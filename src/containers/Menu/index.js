@@ -8,6 +8,7 @@ import {
   Drawer,
   Button,
   Layout,
+  List,
 } from "antd";
 import { map, isEmpty, filter, addIndex } from "ramda";
 import { connect } from "react-redux";
@@ -21,6 +22,7 @@ import {
 } from "../../state/actions";
 import Card from "../../components/HorizontalCard";
 import Cart from "../../components/Cart";
+import Item from "../../components/Item";
 
 const Menu = ({
   history,
@@ -82,33 +84,81 @@ const Menu = ({
         </Title>
         <Row gutter={[16, 16]} align="center" justify="center">
           {loadedPizzas &&
+            collapse &&
             mapIndexed((card, index) => (
               <Col key={index} span={24}>
                 <Card card={card} addTocart={addTocart} />
               </Col>
             ))(filter((pizza) => !isEmpty(pizza))(loadedPizzas))}
+          {loadedPizzas && !collapse && (
+            <List
+              style={{
+                textAlign: "left",
+                width: "100%",
+                paddingBottom: "20px",
+              }}
+              header={""}
+              bordered
+              dataSource={loadedPizzas}
+              renderItem={(product) => (
+                <Item product={product} addTocart={addTocart} />
+              )}
+            />
+          )}
         </Row>
         <Title level={3} id="pasta">
           Pasta
         </Title>
         <Row gutter={[16, 16]} align="center" justify="center">
           {loadedPasta &&
+            collapse &&
             mapIndexed((card, index) => (
               <Col key={index} span={24}>
                 <Card card={card} addTocart={addTocart} />
               </Col>
-            ))(filter((burger) => !isEmpty(burger))(loadedPasta))}
+            ))(filter((pasta) => !isEmpty(pasta))(loadedPasta))}
+          {loadedPasta && !collapse && (
+            <List
+              style={{
+                textAlign: "left",
+                width: "100%",
+                paddingBottom: "20px",
+              }}
+              header={""}
+              bordered
+              dataSource={loadedPasta}
+              renderItem={(product) => (
+                <Item product={product} addTocart={addTocart} />
+              )}
+            />
+          )}
         </Row>
         <Title level={3} id="drinks">
           Drinks
         </Title>
         <Row gutter={[16, 16]} align="center" justify="center">
           {loadedDrinks &&
+            collapse &&
             mapIndexed((card, index) => (
               <Col key={index} span={24}>
                 <Card card={card} addTocart={addTocart} />
               </Col>
             ))(filter((drink) => !isEmpty(drink))(loadedDrinks))}
+          {loadedDrinks && !collapse && (
+            <List
+              style={{
+                textAlign: "left",
+                width: "100%",
+                paddingBottom: "20px",
+              }}
+              header={""}
+              bordered
+              dataSource={loadedDrinks}
+              renderItem={(product) => (
+                <Item product={product} addTocart={addTocart} />
+              )}
+            />
+          )}
         </Row>
       </Col>
       {collapse ? (
@@ -129,6 +179,9 @@ const Menu = ({
             style={{
               position: "fixed",
               zIndex: 2,
+              bottom: 0,
+              left: 0,
+              padding: 0,
               width: "100%",
               backgroundColor: "transparent",
             }}>
@@ -142,7 +195,7 @@ const Menu = ({
             </Affix>
           </Footer>
           <Drawer
-            width={500}
+            width="80%"
             title="Cart"
             placement="right"
             closable={true}
