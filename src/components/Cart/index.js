@@ -84,7 +84,7 @@ const Content = ({
             <div key={index}>
               <Row justify="space-between">
                 <Col>{item.name}</Col>
-                <Col>{Number(item.price * item.quantity).toFixed(3)}€</Col>
+                <Col>{Number(item.price * item.quantity).toFixed(2)}€</Col>
               </Row>
               <Row justify="space-between">
                 <Col flex="2px">
@@ -105,19 +105,19 @@ const Content = ({
       <div style={{ height: "100px" }}>
         <Row justify="space-between">
           <Col>Total</Col>
-          <Col>{Number(price.subPrice).toFixed(3)}€</Col>
+          <Col>{Number(price.subPrice).toFixed(2)}€</Col>
         </Row>
         <Row justify="space-between">
           <Col>Delivery</Col>
-          <Col>{Number(price.delivery).toFixed(3)}€</Col>
+          <Col>{Number(price.delivery).toFixed(2)}€</Col>
         </Row>
         <Row justify="space-between">
           <Col>Total</Col>
-          <Col>{Number(price.totalPrice).toFixed(3)}€</Col>
+          <Col>{Number(price.totalPrice).toFixed(2)}€</Col>
         </Row>
         <Row justify="space-between">
           <Col></Col>
-          <Col>{Number(price.totalDollar).toFixed(3)}$</Col>
+          <Col>{Number(price.totalDollar).toFixed(2)}$</Col>
         </Row>
       </div>
       <Button type="primary" block onClick={() => handleCheckout(price)}>
