@@ -1,9 +1,9 @@
-import React from 'react';
-import { Card, Row, Col, Button, notification } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
-import { Scrollbars } from 'react-custom-scrollbars';
-import { map, addIndex } from 'ramda';
-import '../../App.less';
+import React from "react";
+import { Card, Row, Col, Button, notification } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import { Scrollbars } from "react-custom-scrollbars";
+import { map, addIndex } from "ramda";
+import "../../App.less";
 
 const EURO_DOLLAR_RATE = 1.12;
 
@@ -18,8 +18,7 @@ const Counter = ({ item, modifyFromCart }) => {
             item.quantity = item.quantity ? item.quantity - 1 : 1;
             modifyFromCart(item);
           }}
-          disabled={item.quantity <= 1}
-        >
+          disabled={item.quantity <= 1}>
           -
         </Button>
       </Col>
@@ -33,8 +32,7 @@ const Counter = ({ item, modifyFromCart }) => {
           onClick={() => {
             item.quantity = item.quantity ? item.quantity + 1 : 1;
             modifyFromCart(item);
-          }}
-        >
+          }}>
           +
         </Button>
       </Col>
@@ -47,13 +45,13 @@ const Content = ({
   cart,
   deleteFromCart,
   modifyFromCart,
-  loadPricing
+  loadPricing,
 }) => {
   var mapIndexed = addIndex(map);
   var items = cart ? cart.items : [];
-  const getTotalPrice = items =>
+  const getTotalPrice = (items) =>
     items
-      .map(item => item.price * item.quantity)
+      .map((item) => item.price * item.quantity)
       .reduce((acc, value) => acc + value, 0);
 
   const totalPrice = getTotalPrice(items);
@@ -61,26 +59,26 @@ const Content = ({
   price.totalPrice = price.delivery + price.subPrice;
   price.totalDollar = (price.delivery + totalPrice) * EURO_DOLLAR_RATE;
 
-  const openNotification = placement => {
+  const openNotification = (placement) => {
     notification.error({
       message: `Error`,
       description:
-        'You should put some items into the cart before proceeding to payment.',
-      placement
+        "You should put some items into the cart before proceeding to payment.",
+      placement,
     });
   };
 
-  const handleCheckout = price => {
+  const handleCheckout = (price) => {
     if (items.length !== 0) {
       loadPricing(price);
-      history.push('/checkout');
+      history.push("/checkout");
     } else {
-      openNotification('topLeft');
+      openNotification("topLeft");
     }
   };
   return (
     <div>
-      <Scrollbars style={{ height: 'calc(50vh - 100px)' }}>
+      <Scrollbars style={{ height: "calc(50vh - 100px)" }}>
         {items &&
           mapIndexed((item, index) => (
             <div key={index}>
@@ -93,8 +91,7 @@ const Content = ({
                   <Button
                     type="text"
                     size="small"
-                    onClick={() => deleteFromCart(item.id)}
-                  >
+                    onClick={() => deleteFromCart(item.id)}>
                     <CloseOutlined /> Remove
                   </Button>
                 </Col>
@@ -105,7 +102,7 @@ const Content = ({
             </div>
           ))(items)}
       </Scrollbars>
-      <div style={{ height: '100px' }}>
+      <div style={{ height: "100px" }}>
         <Row justify="space-between">
           <Col>Total</Col>
           <Col>{Number(price.subPrice).toFixed(3)}€</Col>
@@ -136,7 +133,7 @@ const CustomCart = ({
   deleteFromCart,
   modifyFromCart,
   loadPricing,
-  config
+  config,
 }) => {
   const price = { delivery: config ? config.delivery_fees : 5 };
   return (
@@ -144,13 +141,13 @@ const CustomCart = ({
       hoverable
       title="Your cart"
       extra={
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
         <a href="#" onClick={clearCart}>
           Clear all
         </a>
       }
       style={{ width: 400 }}
-      className="side-card"
-    >
+      className="side-card">
       <Content
         history={history}
         price={price}
