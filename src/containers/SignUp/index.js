@@ -47,7 +47,11 @@ const SignUpForm = ({ history, signup }) => {
 
   return (
     <div className="auth-container">
-      <Col span={8} className="auth-form">
+      <Col
+        lg={{ span: 12 }}
+        md={{ span: 12 }}
+        xs={{ span: 16 }}
+        className="auth-form">
         <Title level={2}>Sign Up</Title>
         <Form
           name="signup"
