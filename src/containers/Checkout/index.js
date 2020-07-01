@@ -9,6 +9,9 @@ import {
   Row,
   Select,
   notification,
+  Drawer,
+  Collapse,
+  Layout,
 } from "antd";
 import {
   MailOutlined,
@@ -38,6 +41,9 @@ const CheckoutForm = ({
   modifyFromCart,
   loadPricing,
 }) => {
+  const { Footer } = Layout;
+  const [collapse, setCollapse] = useState(window.innerWidth >= 1000);
+  const [visible, setVisible] = useState(false);
   const { Title } = Typography;
   const { TextArea } = Input;
   const { Option } = Select;
@@ -237,17 +243,56 @@ const CheckoutForm = ({
           </Form.Item>
         </Form>
       </Col>
-      <Affix offsetTop={64}>
-        <Cart
-          history={history}
-          cart={cart}
-          clearCart={clearCart}
-          deleteFromCart={deleteFromCart}
-          modifyFromCart={modifyFromCart}
-          config={config}
-          loadPricing={loadPricing}
-        />
-      </Affix>
+      {collapse ? (
+        <Affix offsetTop={64}>
+          <Cart
+            history={history}
+            cart={cart}
+            clearCart={clearCart}
+            deleteFromCart={deleteFromCart}
+            modifyFromCart={modifyFromCart}
+            config={config}
+            loadPricing={loadPricing}
+          />
+        </Affix>
+      ) : (
+        <>
+          <Footer
+            style={{
+              position: "fixed",
+              zIndex: 2,
+              width: "100%",
+              backgroundColor: "transparent",
+            }}>
+            <Affix offsetTop={450}>
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => setVisible(!visible)}>
+                Show cart ( {cart.items.length} elements )
+              </Button>
+            </Affix>
+          </Footer>
+          <Drawer
+            width={500}
+            title="Cart"
+            placement="right"
+            closable={true}
+            visible={visible}
+            key="right"
+            onClose={() => setVisible(false)}>
+            <Cart
+              history={history}
+              cart={cart}
+              clearCart={clearCart}
+              deleteFromCart={deleteFromCart}
+              modifyFromCart={modifyFromCart}
+              config={config}
+              loadPricing={loadPricing}
+            />
+          </Drawer>
+        </>
+      )}
     </div>
   );
 };

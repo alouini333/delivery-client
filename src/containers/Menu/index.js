@@ -1,5 +1,14 @@
-import React, { useEffect } from "react";
-import { Col, Row, Typography, Affix, Anchor } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Col,
+  Row,
+  Typography,
+  Affix,
+  Anchor,
+  Drawer,
+  Button,
+  Layout,
+} from "antd";
 import { map, isEmpty, filter, addIndex } from "ramda";
 import { connect } from "react-redux";
 import {
@@ -25,9 +34,23 @@ const Menu = ({
   cart,
   config,
 }) => {
+  const { Footer } = Layout;
+  const [collapse, setCollapse] = useState(window.innerWidth >= 1000);
+  const [visible, setVisible] = useState(false);
   const { Title } = Typography;
   const { Link } = Anchor;
   var mapIndexed = addIndex(map);
+  useEffect(() => {
+    const layoutWidth = () => {
+      const shouldCollapse = window.innerWidth >= 1000;
+      if (collapse !== shouldCollapse) setCollapse(!collapse);
+    };
+    window.addEventListener("resize", layoutWidth);
+    return () => {
+      window.removeEventListener("resize", layoutWidth);
+    };
+  }, [collapse]);
+
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
@@ -88,17 +111,56 @@ const Menu = ({
             ))(filter((drink) => !isEmpty(drink))(loadedDrinks))}
         </Row>
       </Col>
-      <Affix offsetTop={64}>
-        <Cart
-          history={history}
-          cart={cart}
-          clearCart={clearCart}
-          deleteFromCart={deleteFromCart}
-          modifyFromCart={modifyFromCart}
-          config={config}
-          loadPricing={loadPricing}
-        />
-      </Affix>
+      {collapse ? (
+        <Affix offsetTop={64}>
+          <Cart
+            history={history}
+            cart={cart}
+            clearCart={clearCart}
+            deleteFromCart={deleteFromCart}
+            modifyFromCart={modifyFromCart}
+            config={config}
+            loadPricing={loadPricing}
+          />
+        </Affix>
+      ) : (
+        <>
+          <Footer
+            style={{
+              position: "fixed",
+              zIndex: 2,
+              width: "100%",
+              backgroundColor: "transparent",
+            }}>
+            <Affix offsetTop={450}>
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => setVisible(!visible)}>
+                Show cart ( {cart.items.length} elements )
+              </Button>
+            </Affix>
+          </Footer>
+          <Drawer
+            width={500}
+            title="Cart"
+            placement="right"
+            closable={true}
+            visible={visible}
+            key="right"
+            onClose={() => setVisible(false)}>
+            <Cart
+              history={history}
+              cart={cart}
+              clearCart={clearCart}
+              deleteFromCart={deleteFromCart}
+              modifyFromCart={modifyFromCart}
+              config={config}
+              loadPricing={loadPricing}
+            />
+          </Drawer>
+        </>
+      )}
     </div>
   );
 };
