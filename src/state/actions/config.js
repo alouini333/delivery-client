@@ -15,7 +15,5 @@ export const getConfig = () => (dispatch) =>
       dispatch(loadConfig(res.data.data));
     })
     .catch(function (error) {
-      if (error.response.status === 500) {
-        console.log(error.response);
-      }
+      console.log(error.response);
     });
