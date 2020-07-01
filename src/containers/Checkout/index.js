@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -10,7 +10,6 @@ import {
   Select,
   notification,
   Drawer,
-  Collapse,
   Layout,
 } from "antd";
 import {
@@ -59,7 +58,16 @@ const CheckoutForm = ({
       placement,
     });
   };
-
+  useEffect(() => {
+    const layoutWidth = () => {
+      const shouldCollapse = window.innerWidth >= 1000;
+      if (collapse !== shouldCollapse) setCollapse(!collapse);
+    };
+    window.addEventListener("resize", layoutWidth);
+    return () => {
+      window.removeEventListener("resize", layoutWidth);
+    };
+  }, [collapse]);
   const onFinish = (values) => {
     const items = cart.items.map((item) => pick(["id", "quantity"], item));
     if (items.length === 0) {
