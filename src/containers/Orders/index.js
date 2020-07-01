@@ -46,7 +46,6 @@ const Orders = ({ history, getOrders, getOrder, cart, user }) => {
       dataIndex: "method",
       key: "method",
       render: (text, record) => {
-        let display = "";
         switch (text) {
           case "card":
             return <Tag color="gold">'Credit card'</Tag>;
@@ -64,7 +63,9 @@ const Orders = ({ history, getOrders, getOrder, cart, user }) => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <a onClick={() => showModal(record.id)}>Details</a>
+          <a href="#" onClick={() => showModal(record.id)}>
+            Details
+          </a>
         </Space>
       ),
     },
