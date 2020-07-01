@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Typography, Table, Space } from "antd";
+import { Col, Typography, Table, Space, Tag } from "antd";
 import { connect } from "react-redux";
 import { getOrders, getOrder } from "../../state/actions";
 import CustomModal from "../../components/Modal";
@@ -37,9 +37,27 @@ const Orders = ({ history, getOrders, getOrder, cart, user }) => {
       key: "total",
     },
     {
+      title: "Ordered on",
+      dataIndex: "created_at",
+      key: "created_at",
+    },
+    {
       title: "Payment method",
       dataIndex: "method",
       key: "method",
+      render: (text, record) => {
+        let display = "";
+        switch (text) {
+          case "card":
+            return <Tag color="gold">'Credit card'</Tag>;
+          case "cash":
+            return <Tag color="green">'Cash'</Tag>;
+          case "bitcoin":
+            return <Tag color="orange">Bitcoin</Tag>;
+          default:
+            return <Tag color="red">Error</Tag>;
+        }
+      },
     },
     {
       title: "Action",
