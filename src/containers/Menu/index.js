@@ -129,6 +129,9 @@ const Menu = ({
             style={{
               position: "fixed",
               zIndex: 2,
+              bottom: 0,
+              left: 0,
+              padding: 0,
               width: "100%",
               backgroundColor: "transparent",
             }}>
@@ -142,7 +145,7 @@ const Menu = ({
             </Affix>
           </Footer>
           <Drawer
-            width={500}
+            width="60%"
             title="Cart"
             placement="right"
             closable={true}
