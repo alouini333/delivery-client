@@ -18,7 +18,13 @@ import {
 } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { pick } from "ramda";
-import { checkout, loadPricing } from "../../state/actions";
+import {
+  checkout,
+  loadPricing,
+  clearCart,
+  deleteFromCart,
+  modifyFromCart,
+} from "../../state/actions";
 import Cart from "../../components/Cart";
 
 const CheckoutForm = ({
@@ -254,5 +260,8 @@ const mapStateToProps = ({ cart, user }) => ({
 const mapDispatchToPros = (dispatch) => ({
   checkout: (payload) => dispatch(checkout(payload)),
   loadPricing: (payload) => dispatch(loadPricing(payload)),
+  clearCart: () => dispatch(clearCart()),
+  deleteFromCart: (id) => dispatch(deleteFromCart(id)),
+  modifyFromCart: (payload) => dispatch(modifyFromCart(payload)),
 });
 export default connect(mapStateToProps, mapDispatchToPros)(CheckoutForm);
