@@ -38,7 +38,7 @@ const HorizontalCard = ({ card, addTocart }) => {
       loading={!card}
       style={{ width: "100%" }}
       actions={[
-        <span> {card ? Number(card.price * count).toFixed(3) : null} €</span>,
+        <span> {card ? Number(card.price * count).toFixed(2) : null} €</span>,
         <Counter count={count} setCount={setCount} />,
         <Button onClick={() => addTocart(card, count)} type="text">
           <PlusOutlined /> Add to cart
