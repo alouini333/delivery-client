@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import { Col, Typography, Table, Space, Tag } from "antd";
 import { connect } from "react-redux";
