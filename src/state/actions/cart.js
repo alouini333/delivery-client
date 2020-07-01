@@ -72,10 +72,6 @@ export const checkout = (payload) => (dispatch) =>
     )
     .then((res) => {
       if (res.status === 200) {
-        localStorage.setItem(
-          "message",
-          JSON.stringify({ msg: `Successful checkout.`, variant: "success" })
-        );
         dispatch(clearCart());
       } else {
         localStorage.setItem(
